@@ -1,6 +1,6 @@
-import { Global, Module } from '@nestjs/common';
+import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { DataSourceImpl } from './database.types';
+import { DatabaseMode, DataSourceImpl } from './database.types';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { CatEntity } from './entities/cat.entity';
 import { ClientEntity } from './entities/client.entity';
@@ -15,15 +15,67 @@ import { ShelterRepository } from '../models/shelter/shelter.repository';
 import { ClientRepository } from '../models/client/client.repository';
 import { entities } from './entities';
 
+export interface DatabaseModuleConfig {
+  mode: DatabaseMode;
+}
+
 @Global()
-@Module({
-  providers: [
-    {
+@Module({})
+export class DatabaseModule {
+  static forRootAsync(config: DatabaseModuleConfig): DynamicModule {
+    return {
+      module: DatabaseModule,
+      providers: [
+        DatabaseModule.createDataSource(config),
+        {
+          provide: CatRepositoryImpl,
+          useFactory: (dataSource: DataSource) =>
+            new CatRepository(dataSource.getRepository(CatEntity)),
+          inject: [DataSourceImpl],
+        },
+        {
+          provide: ShelterRepositoryImpl,
+          useFactory: (dataSource: DataSource) =>
+            new ShelterRepository(dataSource.getRepository(ShelterEntity)),
+          inject: [DataSourceImpl],
+        },
+
+        {
+          provide: ClientRepositoryImpl,
+          useFactory: (dataSource: DataSource) =>
+            new ClientRepository(dataSource.getRepository(ClientEntity)),
+          inject: [DataSourceImpl],
+        },
+      ],
+      exports: [
+        DataSourceImpl,
+        CatRepositoryImpl,
+        ShelterRepositoryImpl,
+        ClientRepositoryImpl,
+      ],
+    };
+  }
+
+  private static createDataSource(config: DatabaseModuleConfig): Provider {
+    return {
       provide: DataSourceImpl,
       useFactory: (configService: ConfigService) => {
+        let dataSourceOptions: Partial<DataSourceOptions>;
+
+        if (config.mode === DatabaseMode.Dev) {
+          dataSourceOptions = {
+            type: configService.getOrThrow('db.dev.type'),
+            database: configService.getOrThrow('db.dev.database'),
+          } as Partial<DataSourceOptions>;
+        } else if (config.mode === DatabaseMode.UnitTest) {
+          dataSourceOptions = {
+            type: 'sqlite',
+            database: ':memory:',
+          };
+        }
+
         const ds = new DataSource({
-          type: configService.getOrThrow('db.dev.type'),
-          database: configService.getOrThrow('db.dev.database'),
+          ...dataSourceOptions,
           synchronize: true,
           entities: [...entities],
         } as DataSourceOptions);
@@ -32,33 +84,6 @@ import { entities } from './entities';
       },
 
       inject: [ConfigService],
-    },
-
-    {
-      provide: CatRepositoryImpl,
-      useFactory: (dataSource: DataSource) =>
-        new CatRepository(dataSource.getRepository(CatEntity)),
-      inject: [DataSourceImpl],
-    },
-    {
-      provide: ShelterRepositoryImpl,
-      useFactory: (dataSource: DataSource) =>
-        new ShelterRepository(dataSource.getRepository(ShelterEntity)),
-      inject: [DataSourceImpl],
-    },
-
-    {
-      provide: ClientRepositoryImpl,
-      useFactory: (dataSource: DataSource) =>
-        new ClientRepository(dataSource.getRepository(ClientEntity)),
-      inject: [DataSourceImpl],
-    },
-  ],
-  exports: [
-    DataSourceImpl,
-    CatRepositoryImpl,
-    ShelterRepositoryImpl,
-    ClientRepositoryImpl,
-  ],
-})
-export class DatabaseModule {}
+    };
+  }
+}

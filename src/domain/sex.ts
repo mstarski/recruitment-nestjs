@@ -1,15 +1,26 @@
-export class Sex {
-  private readonly possibleValues = ['male', 'female', 0, 1];
-  public readonly value: 'male' | 'female';
+import { ValueObject } from './value-object';
+
+type SexType = 'male' | 'female';
+
+export class Sex extends ValueObject<SexType> {
+  public readonly value: SexType;
 
   constructor(value: string | number) {
-    if (!this.possibleValues.includes(value)) {
+    const possibleValues = ['male', 'female', 0, 1];
+    let translatedValue: SexType;
+
+    if (!possibleValues.includes(value)) {
       throw new Error('Sex can be either "male" or "female"');
     }
 
     if (typeof value === 'number') {
-      this.value = value === 0 ? 'female' : 'male';
+      translatedValue = value === 0 ? 'female' : 'male';
+    } else {
+      translatedValue = value as SexType;
     }
+
+    super(translatedValue);
+    this.value = translatedValue;
   }
 
   toBinary(): number {

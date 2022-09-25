@@ -30,15 +30,12 @@ export class CatEntity extends BaseEntity<Cat> {
   }
 
   toModel(): Cat {
-    const adoptionClient = this.adoptedBy.then((entity) => entity.toModel());
-
     return new Cat({
       id: this.id,
       name: this.name,
       breed: this.breed,
       sex: new Sex(this.sex),
       isAdopted: !!this.isAdopted,
-      adoptedBy: adoptionClient,
     });
   }
 }

@@ -43,15 +43,12 @@ export class Cat extends ReadModel<CatEntity> {
   }
 
   toEntity(): CatEntity {
-    const adoptionClient = this.adoptedBy.then((model) => model.toEntity());
-
     return new CatEntity({
       id: this.id,
       name: this.name,
       breed: this.breed,
       sex: this.sex.toBinary(),
       isAdopted: Number(this.isAdopted),
-      adoptedBy: adoptionClient,
     });
   }
 }

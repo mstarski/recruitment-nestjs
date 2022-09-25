@@ -21,11 +21,6 @@ export abstract class AppRepository<
     return entity.toModel();
   }
 
-  async findOne(options?: FindManyOptions<Entity>): Promise<Model> {
-    const entity = await this.dbRepo.findOne(options);
-    return entity.toModel();
-  }
-
   async find(options?: FindOneOptions<Entity>): Promise<Model[]> {
     const entities = await this.dbRepo.find(options);
     return entities.map((e) => e.toModel());

@@ -5,6 +5,3 @@ db:
   dev:
     type: 'sqlite'
     database: 'sqlite/db.sqlite'
-  e2e:
-    type: 'sqlite'
-    database: ':memory:'

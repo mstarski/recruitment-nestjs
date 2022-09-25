@@ -4,6 +4,7 @@ import configuration from '../config/configuration';
 import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
 import { ShelterManagerModule } from './shelter-manager/shelter-manager.module';
+import { DatabaseMode } from './database/database.types';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { ShelterManagerModule } from './shelter-manager/shelter-manager.module';
       isGlobal: true,
       load: [configuration],
     }),
-    DatabaseModule,
+    DatabaseModule.forRootAsync({ mode: DatabaseMode.Dev }),
     ShelterManagerModule,
   ],
   controllers: [AppController],
