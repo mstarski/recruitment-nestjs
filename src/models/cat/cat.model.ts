@@ -1,9 +1,9 @@
 import {
   IsBoolean,
   IsInstance,
+  IsNumber,
   IsOptional,
   IsString,
-  IsUUID,
 } from 'class-validator';
 import { ReadModel } from '../read-model';
 import { Sex } from '../../domain/sex';
@@ -11,8 +11,8 @@ import { CatEntity } from '../../database/entities/cat.entity';
 import { Client } from '../client/client.model';
 
 export class Cat extends ReadModel<CatEntity> {
-  @IsUUID()
-  id: string;
+  @IsNumber()
+  id: number;
 
   @IsString()
   name: string;
@@ -32,14 +32,6 @@ export class Cat extends ReadModel<CatEntity> {
 
   constructor(props: Partial<Cat>) {
     super(props);
-  }
-
-  setAdoption(client: Client) {
-    return new Cat({
-      ...this,
-      adoptedBy: Promise.resolve(client),
-      isAdopted: true,
-    });
   }
 
   toEntity(): CatEntity {

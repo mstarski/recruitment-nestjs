@@ -5,6 +5,9 @@ import { DeepPartial, EntityManager, Repository } from 'typeorm';
 import { Shelter } from '../shelter/shelter.model';
 import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
 import { PaginatedModels } from '../../infra/infra.types';
+import { CatView } from '../../views/cat.view';
+import { ClientEntity } from '../../database/entities/client.entity';
+import { Adoption } from '../../domain/adoption';
 
 export class CatRepository extends AppRepository<CatEntity, Cat> {
   constructor(protected readonly dbRepo: Repository<CatEntity>) {
@@ -32,12 +35,25 @@ export class CatRepository extends AppRepository<CatEntity, Cat> {
     return entity.toModel();
   }
 
+  async setAdoption(
+    cat: CatEntity,
+    client: ClientEntity,
+    entityManager?: EntityManager,
+  ): Promise<Adoption> {
+    const manager = this.resolveManager(entityManager);
+
+    cat.adoptedBy = Promise.resolve(client);
+    const adoptedCat = await manager.save(cat);
+
+    return new Adoption(adoptedCat.toModel(), client.toModel());
+  }
+
   async findPaginated(
     page: number,
     limit: number,
     name?: string,
     shelterId?: string,
-  ): Promise<PaginatedModels<Cat>> {
+  ): Promise<PaginatedModels<CatView>> {
     const searchPattern = name ? `%${name}%` : `%%`;
 
     let qb = this.generatePaginatedQb(
@@ -52,7 +68,7 @@ export class CatRepository extends AppRepository<CatEntity, Cat> {
     }
 
     const [entities, total] = await qb.getManyAndCount();
-    const result = entities.map((e) => e.toModel());
+    const result = entities.map((e) => new CatView(e));
 
     return { total, result };
   }

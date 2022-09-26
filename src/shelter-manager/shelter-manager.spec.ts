@@ -56,7 +56,7 @@ describe('Shelter management', () => {
     const shelter = seedingResult.shelters[0];
 
     // Act
-    const response = await shelterManager.register(catCandidate, shelter.id);
+    const response = await shelterManager.registerCat(catCandidate, shelter.id);
 
     // Assert
     expect(response).toBeInstanceOf(Registration);

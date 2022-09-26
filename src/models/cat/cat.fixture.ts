@@ -10,7 +10,7 @@ export class CatFixtureFactory implements FixtureFactory<Cat> {
     const sex = Sex.getRandom();
 
     return new Cat({
-      id: faker.datatype.uuid(),
+      id: faker.datatype.number(),
       name: faker.name.firstName(sex.value),
       breed: faker.animal.cat(),
       sex: sex,

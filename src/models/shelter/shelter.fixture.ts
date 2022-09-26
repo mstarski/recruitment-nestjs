@@ -5,9 +5,9 @@ import { DeepPartial } from 'typeorm';
 import { ShelterEntity } from '../../database/entities/shelter.entity';
 
 export class ShelterFixtureFactory implements FixtureFactory<Shelter> {
-  generate(name?: string): Shelter {
+  generate(name?: string, id?: number): Shelter {
     return new Shelter({
-      id: faker.datatype.uuid(),
+      id: id ?? faker.datatype.number(),
       name: name ?? faker.company + ' Shelter',
       address: faker.address.streetAddress(false),
     });

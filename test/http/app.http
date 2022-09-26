@@ -1,0 +1,36 @@
+# NestJS Shelter HTTP requests (v1)
+
+# AppController#getCats
+GET http://{{appUrl}}/cats?shelterId=1&limit=5
+Accept: application/json
+
+###
+
+# AppController#getShelters
+GET http://{{appUrl}}/shelters
+Accept: application/json
+
+###
+
+# AppController#getClients
+GET http://{{appUrl}}/clients?surname=Effertzsda
+Accept: application/json
+
+###
+
+#AppController#registerCat
+POST http://{{appUrl}}/registration/1
+Content-Type: application/x-www-form-urlencoded
+
+# Body
+name=foo&sex=0
+
+###
+
+PATCH http://{{appUrl}}/adoption/2
+Content-Type: application/x-www-form-urlencoded
+
+# Body
+clientId=1
+
+###

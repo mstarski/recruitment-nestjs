@@ -1,10 +1,10 @@
-import { IsString, IsUUID } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 import { ReadModel } from '../read-model';
 import { ShelterEntity } from '../../database/entities/shelter.entity';
 
 export class Shelter extends ReadModel<ShelterEntity> {
-  @IsUUID()
-  id: string;
+  @IsNumber()
+  id: number;
 
   @IsString()
   name: string;

@@ -9,13 +9,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('/api/v1');
+  app.setGlobalPrefix('/api');
+  app.enableVersioning();
 
   const openAPIConfig = new DocumentBuilder()
     .setTitle('NestJS Shelter')
     .setDescription('Simple NestJS project meant for recruitment purposes.')
     .setVersion('1.0')
-    .setBasePath('/api/v1')
     .build();
 
   const swaggerDocument = SwaggerModule.createDocument(app, openAPIConfig);
@@ -28,7 +28,13 @@ async function bootstrap() {
 
   const appPort = config.get('http.port') || 8000;
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
   await app.listen(appPort, () => console.log(`Listening on ${appPort} 🚀`));
 }

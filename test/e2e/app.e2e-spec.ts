@@ -1,9 +1,9 @@
 import * as request from 'supertest';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { AppModule } from '../src/app.module';
-import { DataSourceImpl } from '../src/database/database.types';
-import { TestingTool } from '../src/tools/testing.tool';
+import { AppModule } from '../../src/app.module';
+import { DataSourceImpl } from '../../src/database/database.types';
+import { TestingTool } from '../../src/tools/testing.tool';
 import { ConfigService } from '@nestjs/config';
 
 describe('App e2e testing', () => {

@@ -1,8 +1,6 @@
-import { ValueObject } from './value-object';
-
 type SexType = 'male' | 'female';
 
-export class Sex extends ValueObject<SexType> {
+export class Sex {
   public readonly value: SexType;
 
   constructor(value: string | number) {
@@ -19,7 +17,6 @@ export class Sex extends ValueObject<SexType> {
       translatedValue = value as SexType;
     }
 
-    super(translatedValue);
     this.value = translatedValue;
   }
 

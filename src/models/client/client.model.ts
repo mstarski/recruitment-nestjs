@@ -1,11 +1,11 @@
 import { ReadModel } from '../read-model';
-import { IsInstance, IsInt, IsString, IsUUID, Min } from 'class-validator';
+import { IsInstance, IsInt, IsNumber, IsString, Min } from 'class-validator';
 import { Sex } from '../../domain/sex';
 import { ClientEntity } from '../../database/entities/client.entity';
 
 export class Client extends ReadModel<ClientEntity> {
-  @IsUUID()
-  id: string;
+  @IsNumber()
+  id: number;
 
   @IsString()
   name: string;

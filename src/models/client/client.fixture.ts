@@ -10,7 +10,7 @@ export class ClientFixtureFactory implements FixtureFactory<Client> {
     const sex = Sex.getRandom();
 
     return new Client({
-      id: faker.datatype.uuid(),
+      id: faker.datatype.number(),
       name: faker.name.firstName(sex.value),
       surname: faker.name.lastName(sex.value),
       age: faker.datatype.number({ min: 18 }),

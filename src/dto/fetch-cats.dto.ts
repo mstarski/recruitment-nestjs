@@ -1,9 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 import { PaginationDto } from './pagination.dto';
+import { Type } from 'class-transformer';
 
 export class FetchCatsDto extends PaginationDto {
-  @IsUUID()
+  @Type(() => Number)
+  @IsInt()
   @ApiProperty()
   shelterId: string;
 
