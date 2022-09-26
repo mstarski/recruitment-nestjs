@@ -11,3 +11,9 @@
 3. Add 'age' property to `CatEntity`
 4. There can't be two cats that have the same name/breed pair assigned
 5. Create an endpoint to search registrations
+6. Add info about current page to the paginated dto
+
+
+## TODO:
+- Update `@ApiProperty` marked fields and set non-default ones to `{ default: false }`
+- Swagger call example data

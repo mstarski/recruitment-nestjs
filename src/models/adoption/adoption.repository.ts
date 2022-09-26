@@ -10,6 +10,7 @@ import { PaginatedModels } from '../../infra/infra.types';
 import { Adoption } from '../../domain/adoption';
 import { CatEntity } from '../../database/entities/cat.entity';
 import { FetchAdoptionsDto } from '../../dto/fetch-adoptions.dto';
+import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
 
 export class AdoptionRepository {
   constructor(
@@ -22,11 +23,15 @@ export class AdoptionRepository {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
 
+    const searchRequest = new PaginatedSearchRequest(dto.page, dto.limit);
+
     const options: FindManyOptions<CatEntity> = {
       where: {
         isAdopted: 1,
       },
       relations: ['adoptedBy'],
+      take: searchRequest.take,
+      skip: searchRequest.skip,
     };
 
     if (dto?.catId) {

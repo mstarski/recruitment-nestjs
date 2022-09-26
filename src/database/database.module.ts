@@ -9,6 +9,7 @@ import {
   AdoptionRepositoryImpl,
   CatRepositoryImpl,
   ClientRepositoryImpl,
+  RegistrationRepositoryImpl,
   ShelterRepositoryImpl,
 } from '../models/model.types';
 import { CatRepository } from '../models/cat/cat.repository';
@@ -16,6 +17,7 @@ import { ShelterRepository } from '../models/shelter/shelter.repository';
 import { ClientRepository } from '../models/client/client.repository';
 import { entities } from './entities';
 import { AdoptionRepository } from '../models/adoption/adoption.repository';
+import { RegistrationRepository } from '../models/registration/registration.repository';
 
 export interface DatabaseModuleConfig {
   mode: DatabaseMode;
@@ -48,10 +50,16 @@ export class DatabaseModule {
             new ClientRepository(dataSource.getRepository(ClientEntity)),
           inject: [DataSourceImpl],
         },
+
         {
           provide: AdoptionRepositoryImpl,
           useFactory: (dataSource: DataSource) =>
             new AdoptionRepository(dataSource),
+          inject: [DataSourceImpl],
+        },
+        {
+          provide: RegistrationRepositoryImpl,
+          useFactory: (dataSource) => new RegistrationRepository(dataSource),
           inject: [DataSourceImpl],
         },
       ],
@@ -61,6 +69,7 @@ export class DatabaseModule {
         ShelterRepositoryImpl,
         ClientRepositoryImpl,
         AdoptionRepositoryImpl,
+        RegistrationRepositoryImpl,
       ],
     };
   }
