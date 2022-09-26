@@ -1,11 +1,9 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import { Client } from '../../models/client/client.model';
-import { Sex } from '../../domain/sex';
 import { CatEntity } from './cat.entity';
 
 @Entity()
-export class ClientEntity extends BaseEntity<Client> {
+export class ClientEntity extends BaseEntity {
   @Column()
   name: string;
 
@@ -23,15 +21,5 @@ export class ClientEntity extends BaseEntity<Client> {
 
   constructor(props: Partial<ClientEntity>) {
     super(props);
-  }
-
-  toModel(): Client {
-    return new Client({
-      id: this.id,
-      name: this.name,
-      surname: this.surname,
-      age: this.age,
-      sex: new Sex(this.sex),
-    });
   }
 }

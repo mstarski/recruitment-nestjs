@@ -39,19 +39,19 @@ export class SeederTool extends Tool {
     console.log('Seeding db 🌱...');
 
     const shelter = await shelterRepo.save(
-      shelterFixtureFactory.generateDraft('Sample'),
+      shelterFixtureFactory.generate('Sample'),
     );
     seededShelters.push(shelter);
 
     for (let i = 0; i < 20; i++) {
-      const catCandidate = catFixtureFactory.generateDraft();
-      const cat = catRepo.create(catCandidate);
-      cat.shelter = Promise.resolve(shelter);
+      const catCandidate = catFixtureFactory.generate();
 
-      const savedCat = await catRepo.save(cat);
+      catCandidate.shelter = Promise.resolve(shelter);
+
+      const savedCat = await catRepo.save(catCandidate);
       seededCats.push(savedCat);
 
-      const clientCandidate = clientFixtureFactory.generateDraft();
+      const clientCandidate = clientFixtureFactory.generate();
 
       const savedClient = await clientRepo.save(clientCandidate);
       seededClients.push(savedClient);

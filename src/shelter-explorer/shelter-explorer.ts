@@ -3,7 +3,6 @@ import { FetchCatsDto } from '../dto/fetch-cats.dto';
 import { PaginatedModels } from '../infra/infra.types';
 import { CatView } from '../views/cat.view';
 import { FetchSheltersDto } from '../dto/fetch-shelters.dto';
-import { Shelter } from '../models/shelter/shelter.model';
 import { FetchClientsDto } from '../dto/fetch-clients.dto';
 import {
   CatRepositoryImpl,
@@ -13,6 +12,7 @@ import {
 import { CatRepository } from '../models/cat/cat.repository';
 import { ShelterRepository } from '../models/shelter/shelter.repository';
 import { ClientRepository } from '../models/client/client.repository';
+import { ShelterEntity } from '../database/entities/shelter.entity';
 
 @Injectable()
 export class ShelterExplorer {
@@ -38,7 +38,7 @@ export class ShelterExplorer {
 
   async fetchShelters(
     dto: FetchSheltersDto,
-  ): Promise<PaginatedModels<Shelter>> {
+  ): Promise<PaginatedModels<ShelterEntity>> {
     return this.shelterRepository.findPaginated(dto.page, dto.limit, dto.name);
   }
 

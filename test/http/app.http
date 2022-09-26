@@ -27,6 +27,7 @@ name=foo&sex=0
 
 ###
 
+#AppController#adoptCat
 PATCH http://{{appUrl}}/adoption/2
 Content-Type: application/x-www-form-urlencoded
 

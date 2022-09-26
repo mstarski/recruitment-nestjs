@@ -27,7 +27,7 @@ export class AdoptionManager {
     private readonly dataSource: DataSource,
   ) {}
 
-  async adopt(catId: number, dto: AdoptCatDto) {
+  async adoptCat(catId: number, dto: AdoptCatDto) {
     const { clientId } = dto;
 
     const cat = await this.catRepository.findOneOrFail({
@@ -44,9 +44,6 @@ export class AdoptionManager {
       where: { id: clientId },
     });
 
-    return await this.catRepository.setAdoption(
-      cat.toEntity(),
-      client.toEntity(),
-    );
+    return await this.catRepository.setAdoption(cat, client);
   }
 }

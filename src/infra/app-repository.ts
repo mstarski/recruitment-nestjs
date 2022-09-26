@@ -1,4 +1,3 @@
-import { BaseEntity } from 'src/database/entities/base.entity';
 import {
   EntityManager,
   FindManyOptions,
@@ -6,24 +5,18 @@ import {
   Repository,
   SelectQueryBuilder,
 } from 'typeorm';
-import { ReadModel } from '../models/read-model';
 import { CatEntity } from '../database/entities/cat.entity';
 import { PaginatedSearchRequest } from './paginated-models-request';
 
-export abstract class AppRepository<
-  Entity extends BaseEntity<Model>,
-  Model extends ReadModel<Entity>,
-> {
+export abstract class AppRepository<Entity> {
   protected constructor(protected readonly dbRepo: Repository<Entity>) {}
 
-  async findOneOrFail(options?: FindManyOptions<Entity>): Promise<Model> {
-    const entity = await this.dbRepo.findOneOrFail(options);
-    return entity.toModel();
+  async findOneOrFail(options?: FindManyOptions<Entity>): Promise<Entity> {
+    return this.dbRepo.findOneOrFail(options);
   }
 
-  async find(options?: FindOneOptions<Entity>): Promise<Model[]> {
-    const entities = await this.dbRepo.find(options);
-    return entities.map((e) => e.toModel());
+  async find(options?: FindOneOptions<Entity>): Promise<Entity[]> {
+    return await this.dbRepo.find(options);
   }
 
   protected resolveManager(entityManager?: EntityManager) {

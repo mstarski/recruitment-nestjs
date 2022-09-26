@@ -1,38 +1,39 @@
 import { AppRepository } from '../../infra/app-repository';
 import { CatEntity } from '../../database/entities/cat.entity';
-import { Cat } from './cat.model';
+
 import { DeepPartial, EntityManager, Repository } from 'typeorm';
-import { Shelter } from '../shelter/shelter.model';
+
 import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
 import { PaginatedModels } from '../../infra/infra.types';
 import { CatView } from '../../views/cat.view';
 import { ClientEntity } from '../../database/entities/client.entity';
 import { Adoption } from '../../domain/adoption';
+import { ShelterEntity } from '../../database/entities/shelter.entity';
 
-export class CatRepository extends AppRepository<CatEntity, Cat> {
+export class CatRepository extends AppRepository<CatEntity> {
   constructor(protected readonly dbRepo: Repository<CatEntity>) {
     super(dbRepo);
   }
 
   async create(
     body: DeepPartial<CatEntity>,
-    shelter: Shelter,
+    shelter: ShelterEntity,
     entityManager?: EntityManager,
-  ): Promise<Cat> {
+  ): Promise<CatEntity> {
     const manager = this.resolveManager(entityManager);
 
     const entity = manager.create(body);
-    entity.shelter = Promise.resolve(shelter.toEntity());
+    entity.shelter = Promise.resolve(shelter);
 
-    const result = await manager.save(entity);
-    return result.toModel();
+    return await manager.save(entity);
   }
 
-  async update(cat: Cat, entityManager?: EntityManager): Promise<Cat> {
+  async update(
+    cat: CatEntity,
+    entityManager?: EntityManager,
+  ): Promise<CatEntity> {
     const manager = this.resolveManager(entityManager);
-
-    const entity = await manager.save(cat.toEntity());
-    return entity.toModel();
+    return await manager.save(cat);
   }
 
   async setAdoption(
@@ -43,9 +44,11 @@ export class CatRepository extends AppRepository<CatEntity, Cat> {
     const manager = this.resolveManager(entityManager);
 
     cat.adoptedBy = Promise.resolve(client);
+    cat.adoptionDate = new Date();
+
     const adoptedCat = await manager.save(cat);
 
-    return new Adoption(adoptedCat.toModel(), client.toModel());
+    return new Adoption(adoptedCat, client);
   }
 
   async findPaginated(

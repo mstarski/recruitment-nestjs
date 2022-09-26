@@ -1,12 +1,11 @@
 import { AppRepository } from '../../infra/app-repository';
 import { Repository } from 'typeorm';
 import { ClientEntity } from '../../database/entities/client.entity';
-import { Client } from './client.model';
 import { PaginatedModels } from '../../infra/infra.types';
 import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
 import { ClientView } from '../../views/client.view';
 
-export class ClientRepository extends AppRepository<ClientEntity, Client> {
+export class ClientRepository extends AppRepository<ClientEntity> {
   constructor(protected readonly dbRepo: Repository<ClientEntity>) {
     super(dbRepo);
   }

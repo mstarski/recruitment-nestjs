@@ -1,13 +1,13 @@
-import { Cat } from '../models/cat/cat.model';
-import { Shelter } from '../models/shelter/shelter.model';
 import { HashTool } from '../tools/hash.tool';
+import { CatEntity } from '../database/entities/cat.entity';
+import { ShelterEntity } from '../database/entities/shelter.entity';
 
 export class Registration {
   public readonly catId: number;
   public readonly shelterId: number;
   public readonly registrationHash: string;
 
-  constructor(cat: Cat, shelter: Shelter) {
+  constructor(cat: CatEntity, shelter: ShelterEntity) {
     this.catId = cat.id;
     this.shelterId = shelter.id;
     this.registrationHash = HashTool.md5(

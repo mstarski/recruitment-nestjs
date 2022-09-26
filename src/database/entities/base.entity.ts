@@ -1,12 +1,10 @@
 import { PrimaryGeneratedColumn } from 'typeorm';
 
-export abstract class BaseEntity<Model> {
+export abstract class BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  protected constructor(props: Partial<BaseEntity<Model>>) {
+  protected constructor(props: Partial<BaseEntity>) {
     Object.assign(this, props);
   }
-
-  abstract toModel(): Model;
 }

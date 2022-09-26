@@ -51,6 +51,6 @@ export class AppController {
 
   @Patch('adoption/:catId')
   adoptCat(@Param('catId') catId: number, @Body() dto: AdoptCatDto) {
-    return this.adoptionManager.adopt(catId, dto);
+    return this.adoptionManager.adoptCat(catId, dto);
   }
 }
