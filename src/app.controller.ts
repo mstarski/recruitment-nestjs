@@ -16,6 +16,7 @@ import { RegisterCatDto } from './dto/register-cat.dto';
 import { ShelterManager } from './shelter-manager/shelter-manager';
 import { AdoptCatDto } from './dto/adopt-cat.dto';
 import { AdoptionManager } from './adoption-manager/adoption-manager';
+import { FetchAdoptionsDto } from './dto/fetch-adoptions.dto';
 
 @ApiTags('Application Controller')
 @Controller({ version: '1' })
@@ -26,19 +27,24 @@ export class AppController {
     private readonly adoptionManager: AdoptionManager,
   ) {}
 
-  @Get('cats')
+  @Get('cat')
   getCats(@Query() dto: FetchCatsDto) {
     return this.shelterExplorer.fetchCats(dto);
   }
 
-  @Get('shelters')
+  @Get('shelter')
   getShelters(@Query() dto: FetchSheltersDto) {
     return this.shelterExplorer.fetchShelters(dto);
   }
 
-  @Get('clients')
+  @Get('client')
   getClients(@Query() dto: FetchClientsDto) {
     return this.shelterExplorer.fetchClients(dto);
+  }
+
+  @Get('adoption')
+  getAdoptions(@Query() dto: FetchAdoptionsDto) {
+    return this.shelterExplorer.fetchAdoptions(dto);
   }
 
   @Post('registration/:shelterId')

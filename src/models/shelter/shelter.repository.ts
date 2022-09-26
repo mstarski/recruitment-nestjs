@@ -1,10 +1,10 @@
-import { AppRepository } from '../../infra/app-repository';
+import { DbRepository } from '../../infra/db-repository';
 import { Repository } from 'typeorm';
 import { ShelterEntity } from '../../database/entities/shelter.entity';
 import { PaginatedModels } from '../../infra/infra.types';
 import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
 
-export class ShelterRepository extends AppRepository<ShelterEntity> {
+export class ShelterRepository extends DbRepository<ShelterEntity> {
   constructor(protected readonly dbRepo: Repository<ShelterEntity>) {
     super(dbRepo);
   }

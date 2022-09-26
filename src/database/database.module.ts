@@ -6,6 +6,7 @@ import { CatEntity } from './entities/cat.entity';
 import { ClientEntity } from './entities/client.entity';
 import { ShelterEntity } from './entities/shelter.entity';
 import {
+  AdoptionRepositoryImpl,
   CatRepositoryImpl,
   ClientRepositoryImpl,
   ShelterRepositoryImpl,
@@ -14,6 +15,7 @@ import { CatRepository } from '../models/cat/cat.repository';
 import { ShelterRepository } from '../models/shelter/shelter.repository';
 import { ClientRepository } from '../models/client/client.repository';
 import { entities } from './entities';
+import { AdoptionRepository } from '../models/adoption/adoption.repository';
 
 export interface DatabaseModuleConfig {
   mode: DatabaseMode;
@@ -46,12 +48,19 @@ export class DatabaseModule {
             new ClientRepository(dataSource.getRepository(ClientEntity)),
           inject: [DataSourceImpl],
         },
+        {
+          provide: AdoptionRepositoryImpl,
+          useFactory: (dataSource: DataSource) =>
+            new AdoptionRepository(dataSource),
+          inject: [DataSourceImpl],
+        },
       ],
       exports: [
         DataSourceImpl,
         CatRepositoryImpl,
         ShelterRepositoryImpl,
         ClientRepositoryImpl,
+        AdoptionRepositoryImpl,
       ],
     };
   }

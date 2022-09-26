@@ -8,7 +8,7 @@ import {
 import { CatEntity } from '../database/entities/cat.entity';
 import { PaginatedSearchRequest } from './paginated-models-request';
 
-export abstract class AppRepository<Entity> {
+export abstract class DbRepository<Entity> {
   protected constructor(protected readonly dbRepo: Repository<Entity>) {}
 
   async findOneOrFail(options?: FindManyOptions<Entity>): Promise<Entity> {

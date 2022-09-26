@@ -5,6 +5,7 @@ import { CatView } from '../views/cat.view';
 import { FetchSheltersDto } from '../dto/fetch-shelters.dto';
 import { FetchClientsDto } from '../dto/fetch-clients.dto';
 import {
+  AdoptionRepositoryImpl,
   CatRepositoryImpl,
   ClientRepositoryImpl,
   ShelterRepositoryImpl,
@@ -13,6 +14,8 @@ import { CatRepository } from '../models/cat/cat.repository';
 import { ShelterRepository } from '../models/shelter/shelter.repository';
 import { ClientRepository } from '../models/client/client.repository';
 import { ShelterEntity } from '../database/entities/shelter.entity';
+import { FetchAdoptionsDto } from '../dto/fetch-adoptions.dto';
+import { AdoptionRepository } from '../models/adoption/adoption.repository';
 
 @Injectable()
 export class ShelterExplorer {
@@ -25,6 +28,9 @@ export class ShelterExplorer {
 
     @Inject(ClientRepositoryImpl)
     private readonly clientRepository: ClientRepository,
+
+    @Inject(AdoptionRepositoryImpl)
+    private readonly adoptionRepository: AdoptionRepository,
   ) {}
 
   async fetchCats(dto: FetchCatsDto): Promise<PaginatedModels<CatView>> {
@@ -49,5 +55,9 @@ export class ShelterExplorer {
       dto.surname,
       dto.id,
     );
+  }
+
+  async fetchAdoptions(dto: FetchAdoptionsDto) {
+    return this.adoptionRepository.findPaginated(dto);
   }
 }

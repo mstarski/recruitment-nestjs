@@ -1,19 +1,25 @@
 # NestJS Shelter HTTP requests (v1)
 
 # AppController#getCats
-GET http://{{appUrl}}/cats?shelterId=1&limit=5
+GET http://{{appUrl}}/cat?shelterId=1&limit=5
 Accept: application/json
 
 ###
 
 # AppController#getShelters
-GET http://{{appUrl}}/shelters
+GET http://{{appUrl}}/shelter
 Accept: application/json
 
 ###
 
 # AppController#getClients
-GET http://{{appUrl}}/clients?surname=Effertzsda
+GET http://{{appUrl}}/client
+Accept: application/json
+
+###
+
+# AppController#getAdoptions
+GET http://{{appUrl}}/adoption
 Accept: application/json
 
 ###
@@ -28,10 +34,10 @@ name=foo&sex=0
 ###
 
 #AppController#adoptCat
-PATCH http://{{appUrl}}/adoption/2
+PATCH http://{{appUrl}}/adoption/6
 Content-Type: application/x-www-form-urlencoded
 
 # Body
-clientId=1
+clientId=3
 
 ###

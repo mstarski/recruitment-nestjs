@@ -10,3 +10,4 @@
 2. There can't be a cat without a shelter
 3. Add 'age' property to `CatEntity`
 4. There can't be two cats that have the same name/breed pair assigned
+5. Create an endpoint to search registrations

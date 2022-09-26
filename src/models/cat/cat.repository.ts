@@ -1,4 +1,4 @@
-import { AppRepository } from '../../infra/app-repository';
+import { DbRepository } from '../../infra/db-repository';
 import { CatEntity } from '../../database/entities/cat.entity';
 
 import { DeepPartial, EntityManager, Repository } from 'typeorm';
@@ -10,7 +10,7 @@ import { ClientEntity } from '../../database/entities/client.entity';
 import { Adoption } from '../../domain/adoption';
 import { ShelterEntity } from '../../database/entities/shelter.entity';
 
-export class CatRepository extends AppRepository<CatEntity> {
+export class CatRepository extends DbRepository<CatEntity> {
   constructor(protected readonly dbRepo: Repository<CatEntity>) {
     super(dbRepo);
   }
@@ -45,6 +45,7 @@ export class CatRepository extends AppRepository<CatEntity> {
 
     cat.adoptedBy = Promise.resolve(client);
     cat.adoptionDate = new Date();
+    cat.isAdopted = 1;
 
     const adoptedCat = await manager.save(cat);
 
