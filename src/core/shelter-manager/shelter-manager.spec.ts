@@ -1,22 +1,22 @@
 import { Test } from '@nestjs/testing';
 import { ShelterManager } from './shelter-manager';
-import { CatFixtureFactory } from '../models/cat/cat.fixture';
-import { Adoption } from '../domain/adoption';
-import { Registration } from '../domain/registration';
+import { CatFixtureFactory } from '../../fixtures/cat.fixture';
+import { AdoptionView } from '../../views/adoption.view';
+import { RegistrationView } from '../../views/registration.view';
 import { ShelterSearchResultDto } from '../dto/shelter-search-result.dto';
 import {
   CatRepositoryImpl,
   ClientRepositoryImpl,
   ShelterRepositoryImpl,
-} from '../models/model.types';
+} from '../../repositories/repository.token';
 import { createMock } from '@golevelup/ts-jest';
-import { CatRepository } from '../models/cat/cat.repository';
-import { ShelterRepository } from '../models/shelter/shelter.repository';
-import { ClientRepository } from '../models/client/client.repository';
-import { DatabaseMode, DataSourceImpl } from '../database/database.types';
-import { DatabaseModule } from '../database/database.module';
+import { CatRepository } from '../../repositories/cat.repository';
+import { ShelterRepository } from '../../repositories/shelter.repository';
+import { ClientRepository } from '../../repositories/client.repository';
+import { DatabaseMode, DataSourceImpl } from '../../database/database.types';
+import { DatabaseModule } from '../../database/database.module';
 import { ConfigService } from '@nestjs/config';
-import { SeederTool, SeedResult } from '../tools/seeder.tool';
+import { SeederTool, SeedResult } from '../../tools/seeder.tool';
 import { DataSource } from 'typeorm';
 
 describe('Shelter management', () => {
@@ -59,7 +59,7 @@ describe('Shelter management', () => {
     const response = await shelterManager.registerCat(catCandidate, shelter.id);
 
     // Assert
-    expect(response).toBeInstanceOf(Registration);
+    expect(response).toBeInstanceOf(RegistrationView);
   });
 
   it('Can give a cat to adoption', async () => {
@@ -68,7 +68,7 @@ describe('Shelter management', () => {
 
     const response = await shelterManager.adopt(cat.id, client.id);
 
-    expect(response).toBeInstanceOf(Adoption);
+    expect(response).toBeInstanceOf(AdoptionView);
   });
 
   it(`Can get shelter's cats in paginated manner`, async () => {

@@ -1,5 +1,5 @@
 import { ClientEntity } from '../database/entities/client.entity';
-import { Sex } from '../domain/sex';
+import { Sex } from '../value-objects/sex';
 
 export class ClientView {
   name: string;

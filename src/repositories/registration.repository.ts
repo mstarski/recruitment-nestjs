@@ -1,11 +1,11 @@
 import { DataSource, FindManyOptions } from 'typeorm';
 import { Inject } from '@nestjs/common';
-import { DataSourceImpl } from '../../database/database.types';
-import { PaginatedModels } from '../../infra/infra.types';
-import { Registration } from '../../domain/registration';
-import { FetchRegistrationsDto } from '../../dto/fetch-registrations.dto';
-import { CatEntity } from '../../database/entities/cat.entity';
-import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
+import { DataSourceImpl } from '../database/database.types';
+import { PaginatedModels } from '../infra/infra.types';
+import { RegistrationView } from '../views/registration.view';
+import { FetchRegistrationsDto } from '../dto/fetch-registrations.dto';
+import { CatEntity } from '../database/entities/cat.entity';
+import { PaginatedSearchRequest } from '../infra/paginated-models-request';
 
 export class RegistrationRepository {
   constructor(
@@ -14,7 +14,7 @@ export class RegistrationRepository {
 
   async findPaginated(
     dto: FetchRegistrationsDto,
-  ): Promise<PaginatedModels<Registration>> {
+  ): Promise<PaginatedModels<RegistrationView>> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
 
@@ -49,7 +49,7 @@ export class RegistrationRepository {
     const registrations = await Promise.all(
       matchingCats.map(async (cat) => {
         const inhabitedShelter = await cat.shelter;
-        return new Registration(cat, inhabitedShelter);
+        return new RegistrationView(cat, inhabitedShelter);
       }),
     );
 

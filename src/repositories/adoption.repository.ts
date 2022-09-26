@@ -5,12 +5,12 @@ import {
   MoreThanOrEqual,
 } from 'typeorm';
 import { Inject } from '@nestjs/common';
-import { DataSourceImpl } from '../../database/database.types';
-import { PaginatedModels } from '../../infra/infra.types';
-import { Adoption } from '../../domain/adoption';
-import { CatEntity } from '../../database/entities/cat.entity';
-import { FetchAdoptionsDto } from '../../dto/fetch-adoptions.dto';
-import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
+import { DataSourceImpl } from '../database/database.types';
+import { PaginatedModels } from '../infra/infra.types';
+import { AdoptionView } from '../views/adoption.view';
+import { CatEntity } from '../database/entities/cat.entity';
+import { FetchAdoptionsDto } from '../dto/fetch-adoptions.dto';
+import { PaginatedSearchRequest } from '../infra/paginated-models-request';
 
 export class AdoptionRepository {
   constructor(
@@ -19,7 +19,7 @@ export class AdoptionRepository {
 
   async findPaginated(
     dto: FetchAdoptionsDto,
-  ): Promise<PaginatedModels<Adoption>> {
+  ): Promise<PaginatedModels<AdoptionView>> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
 
@@ -70,7 +70,7 @@ export class AdoptionRepository {
     const adoptions = await Promise.all(
       matchingCats.map(async (cat) => {
         const adoptionClient = await cat.adoptedBy;
-        return new Adoption(cat, adoptionClient);
+        return new AdoptionView(cat, adoptionClient);
       }),
     );
 

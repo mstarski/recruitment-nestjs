@@ -1,4 +1,4 @@
-import { Sex } from '../domain/sex';
+import { Sex } from '../value-objects/sex';
 import { CatEntity } from '../database/entities/cat.entity';
 
 export class CatView {

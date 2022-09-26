@@ -1,7 +1,7 @@
-import { FixtureFactory } from '../fixture';
+import { FixtureFactory } from './fixture';
 import { faker } from '@faker-js/faker';
-import { Sex } from '../../domain/sex';
-import { ClientEntity } from '../../database/entities/client.entity';
+import { Sex } from '../value-objects/sex';
+import { ClientEntity } from '../database/entities/client.entity';
 
 export class ClientFixtureFactory implements FixtureFactory<ClientEntity> {
   generate(): ClientEntity {

@@ -11,11 +11,11 @@ import { FetchCatsDto } from './dto/fetch-cats.dto';
 import { FetchSheltersDto } from './dto/fetch-shelters.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FetchClientsDto } from './dto/fetch-clients.dto';
-import { ShelterExplorer } from './shelter-explorer/shelter-explorer';
+import { ShelterExplorer } from './core/shelter-explorer/shelter-explorer';
 import { RegisterCatDto } from './dto/register-cat.dto';
-import { ShelterManager } from './shelter-manager/shelter-manager';
+import { ShelterManager } from './core/shelter-manager/shelter-manager';
 import { AdoptCatDto } from './dto/adopt-cat.dto';
-import { AdoptionManager } from './adoption-manager/adoption-manager';
+import { AdoptionManager } from './core/adoption-manager/adoption-manager';
 import { FetchAdoptionsDto } from './dto/fetch-adoptions.dto';
 import { FetchRegistrationsDto } from './dto/fetch-registrations.dto';
 

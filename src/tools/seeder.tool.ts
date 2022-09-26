@@ -1,10 +1,10 @@
 import { Tool } from './tool';
 import { DataSource } from 'typeorm';
 import { ShelterEntity } from '../database/entities/shelter.entity';
-import { ShelterFixtureFactory } from '../models/shelter/shelter.fixture';
+import { ShelterFixtureFactory } from '../fixtures/shelter.fixture';
 import { CatEntity } from '../database/entities/cat.entity';
-import { CatFixtureFactory } from '../models/cat/cat.fixture';
-import { ClientFixtureFactory } from '../models/client/client.fixture';
+import { CatFixtureFactory } from '../fixtures/cat.fixture';
+import { ClientFixtureFactory } from '../fixtures/client.fixture';
 import { ClientEntity } from '../database/entities/client.entity';
 
 export interface SeedResult {

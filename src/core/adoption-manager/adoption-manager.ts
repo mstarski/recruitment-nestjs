@@ -3,13 +3,13 @@ import {
   CatRepositoryImpl,
   ClientRepositoryImpl,
   ShelterRepositoryImpl,
-} from '../models/model.types';
-import { CatRepository } from '../models/cat/cat.repository';
-import { ShelterRepository } from '../models/shelter/shelter.repository';
-import { DataSourceImpl } from '../database/database.types';
+} from '../../repositories/repository.token';
+import { CatRepository } from '../../repositories/cat.repository';
+import { ShelterRepository } from '../../repositories/shelter.repository';
+import { DataSourceImpl } from '../../database/database.types';
 import { DataSource } from 'typeorm';
-import { ClientRepository } from '../models/client/client.repository';
-import { AdoptCatDto } from '../dto/adopt-cat.dto';
+import { ClientRepository } from '../../repositories/client.repository';
+import { AdoptCatDto } from '../../dto/adopt-cat.dto';
 
 @Injectable()
 export class AdoptionManager {

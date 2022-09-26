@@ -1,14 +1,14 @@
-import { DbRepository } from '../../infra/db-repository';
-import { CatEntity } from '../../database/entities/cat.entity';
+import { DbRepository } from '../infra/db-repository';
+import { CatEntity } from '../database/entities/cat.entity';
 
 import { DeepPartial, EntityManager, Repository } from 'typeorm';
 
-import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
-import { PaginatedModels } from '../../infra/infra.types';
-import { CatView } from '../../views/cat.view';
-import { ClientEntity } from '../../database/entities/client.entity';
-import { Adoption } from '../../domain/adoption';
-import { ShelterEntity } from '../../database/entities/shelter.entity';
+import { PaginatedSearchRequest } from '../infra/paginated-models-request';
+import { PaginatedModels } from '../infra/infra.types';
+import { CatView } from '../views/cat.view';
+import { ClientEntity } from '../database/entities/client.entity';
+import { AdoptionView } from '../views/adoption.view';
+import { ShelterEntity } from '../database/entities/shelter.entity';
 
 export class CatRepository extends DbRepository<CatEntity> {
   constructor(protected readonly dbRepo: Repository<CatEntity>) {
@@ -40,7 +40,7 @@ export class CatRepository extends DbRepository<CatEntity> {
     cat: CatEntity,
     client: ClientEntity,
     entityManager?: EntityManager,
-  ): Promise<Adoption> {
+  ): Promise<AdoptionView> {
     const manager = this.resolveManager(entityManager);
 
     cat.adoptedBy = Promise.resolve(client);
@@ -49,7 +49,7 @@ export class CatRepository extends DbRepository<CatEntity> {
 
     const adoptedCat = await manager.save(cat);
 
-    return new Adoption(adoptedCat, client);
+    return new AdoptionView(adoptedCat, client);
   }
 
   async findPaginated(

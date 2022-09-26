@@ -1,24 +1,24 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { FetchCatsDto } from '../dto/fetch-cats.dto';
-import { PaginatedModels } from '../infra/infra.types';
-import { CatView } from '../views/cat.view';
-import { FetchSheltersDto } from '../dto/fetch-shelters.dto';
-import { FetchClientsDto } from '../dto/fetch-clients.dto';
+import { FetchCatsDto } from '../../dto/fetch-cats.dto';
+import { PaginatedModels } from '../../infra/infra.types';
+import { CatView } from '../../views/cat.view';
+import { FetchSheltersDto } from '../../dto/fetch-shelters.dto';
+import { FetchClientsDto } from '../../dto/fetch-clients.dto';
 import {
   AdoptionRepositoryImpl,
   CatRepositoryImpl,
   ClientRepositoryImpl,
   RegistrationRepositoryImpl,
   ShelterRepositoryImpl,
-} from '../models/model.types';
-import { CatRepository } from '../models/cat/cat.repository';
-import { ShelterRepository } from '../models/shelter/shelter.repository';
-import { ClientRepository } from '../models/client/client.repository';
-import { ShelterEntity } from '../database/entities/shelter.entity';
-import { FetchAdoptionsDto } from '../dto/fetch-adoptions.dto';
-import { AdoptionRepository } from '../models/adoption/adoption.repository';
-import { RegistrationRepository } from '../models/registration/registration.repository';
-import { FetchRegistrationsDto } from '../dto/fetch-registrations.dto';
+} from '../../repositories/repository.token';
+import { CatRepository } from '../../repositories/cat.repository';
+import { ShelterRepository } from '../../repositories/shelter.repository';
+import { ClientRepository } from '../../repositories/client.repository';
+import { ShelterEntity } from '../../database/entities/shelter.entity';
+import { FetchAdoptionsDto } from '../../dto/fetch-adoptions.dto';
+import { AdoptionRepository } from '../../repositories/adoption.repository';
+import { RegistrationRepository } from '../../repositories/registration.repository';
+import { FetchRegistrationsDto } from '../../dto/fetch-registrations.dto';
 
 @Injectable()
 export class ShelterExplorer {

@@ -1,9 +1,9 @@
-import { DbRepository } from '../../infra/db-repository';
+import { DbRepository } from '../infra/db-repository';
 import { Repository } from 'typeorm';
-import { ClientEntity } from '../../database/entities/client.entity';
-import { PaginatedModels } from '../../infra/infra.types';
-import { PaginatedSearchRequest } from '../../infra/paginated-models-request';
-import { ClientView } from '../../views/client.view';
+import { ClientEntity } from '../database/entities/client.entity';
+import { PaginatedModels } from '../infra/infra.types';
+import { PaginatedSearchRequest } from '../infra/paginated-models-request';
+import { ClientView } from '../views/client.view';
 
 export class ClientRepository extends DbRepository<ClientEntity> {
   constructor(protected readonly dbRepo: Repository<ClientEntity>) {

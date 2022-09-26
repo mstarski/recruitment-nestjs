@@ -2,14 +2,14 @@ import { Inject, Injectable } from '@nestjs/common';
 import {
   CatRepositoryImpl,
   ShelterRepositoryImpl,
-} from '../models/model.types';
-import { CatRepository } from '../models/cat/cat.repository';
-import { ShelterRepository } from '../models/shelter/shelter.repository';
+} from '../../repositories/repository.token';
+import { CatRepository } from '../../repositories/cat.repository';
+import { ShelterRepository } from '../../repositories/shelter.repository';
 import { DataSource } from 'typeorm';
-import { DataSourceImpl } from '../database/database.types';
-import { Registration } from '../domain/registration';
-import { RegisterCatDto } from '../dto/register-cat.dto';
-import { CatEntity } from '../database/entities/cat.entity';
+import { DataSourceImpl } from '../../database/database.types';
+import { RegistrationView } from '../../views/registration.view';
+import { RegisterCatDto } from '../../dto/register-cat.dto';
+import { CatEntity } from '../../database/entities/cat.entity';
 
 @Injectable()
 export class ShelterManager {
@@ -27,8 +27,8 @@ export class ShelterManager {
   async registerCat(
     dto: RegisterCatDto,
     shelterId: number,
-  ): Promise<Registration> {
-    let registration: Registration;
+  ): Promise<RegistrationView> {
+    let registration: RegistrationView;
 
     const catCandidate: Partial<CatEntity> = {
       name: dto.name,
@@ -47,7 +47,7 @@ export class ShelterManager {
         entityManager,
       );
 
-      registration = new Registration(cat, shelter);
+      registration = new RegistrationView(cat, shelter);
     });
 
     return registration;

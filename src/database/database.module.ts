@@ -11,13 +11,13 @@ import {
   ClientRepositoryImpl,
   RegistrationRepositoryImpl,
   ShelterRepositoryImpl,
-} from '../models/model.types';
-import { CatRepository } from '../models/cat/cat.repository';
-import { ShelterRepository } from '../models/shelter/shelter.repository';
-import { ClientRepository } from '../models/client/client.repository';
+} from '../repositories/repository.token';
+import { CatRepository } from '../repositories/cat.repository';
+import { ShelterRepository } from '../repositories/shelter.repository';
+import { ClientRepository } from '../repositories/client.repository';
 import { entities } from './entities';
-import { AdoptionRepository } from '../models/adoption/adoption.repository';
-import { RegistrationRepository } from '../models/registration/registration.repository';
+import { AdoptionRepository } from '../repositories/adoption.repository';
+import { RegistrationRepository } from '../repositories/registration.repository';
 
 export interface DatabaseModuleConfig {
   mode: DatabaseMode;

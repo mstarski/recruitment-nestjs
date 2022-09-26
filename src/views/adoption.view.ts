@@ -2,7 +2,7 @@ import { HashTool } from '../tools/hash.tool';
 import { CatEntity } from '../database/entities/cat.entity';
 import { ClientEntity } from '../database/entities/client.entity';
 
-export class Adoption {
+export class AdoptionView {
   public readonly catId: number;
   public readonly catName: string;
   public readonly clientId: number;

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { FixtureFactory } from '../fixture';
-import { ShelterEntity } from '../../database/entities/shelter.entity';
+import { FixtureFactory } from './fixture';
+import { ShelterEntity } from '../database/entities/shelter.entity';
 
 export class ShelterFixtureFactory implements FixtureFactory<ShelterEntity> {
   generate(name?: string): ShelterEntity {

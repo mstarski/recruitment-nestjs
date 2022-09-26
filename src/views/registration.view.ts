@@ -2,7 +2,7 @@ import { HashTool } from '../tools/hash.tool';
 import { CatEntity } from '../database/entities/cat.entity';
 import { ShelterEntity } from '../database/entities/shelter.entity';
 
-export class Registration {
+export class RegistrationView {
   public readonly catId: number;
   public readonly catName: string;
   public readonly shelterId: number;
