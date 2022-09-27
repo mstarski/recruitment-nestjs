@@ -5,6 +5,6 @@ import { ApiProperty } from '@nestjs/swagger';
 export class FetchSheltersDto extends PaginationDto {
   @IsString()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   name?: string;
 }

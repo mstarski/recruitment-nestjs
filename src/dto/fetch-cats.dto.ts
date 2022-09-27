@@ -11,6 +11,6 @@ export class FetchCatsDto extends PaginationDto {
 
   @IsString()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   name?: string;
 }

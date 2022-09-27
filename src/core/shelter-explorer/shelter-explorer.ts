@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FetchCatsDto } from '../../dto/fetch-cats.dto';
-import { PaginatedModels } from '../../infra/infra.types';
+import { PaginatedList } from '../../infra/infra.types';
 import { CatView } from '../../views/cat.view';
 import { FetchSheltersDto } from '../../dto/fetch-shelters.dto';
 import { FetchClientsDto } from '../../dto/fetch-clients.dto';
@@ -14,11 +14,11 @@ import {
 import { CatRepository } from '../../repositories/cat.repository';
 import { ShelterRepository } from '../../repositories/shelter.repository';
 import { ClientRepository } from '../../repositories/client.repository';
-import { ShelterEntity } from '../../database/entities/shelter.entity';
 import { FetchAdoptionsDto } from '../../dto/fetch-adoptions.dto';
 import { AdoptionRepository } from '../../repositories/adoption.repository';
 import { RegistrationRepository } from '../../repositories/registration.repository';
 import { FetchRegistrationsDto } from '../../dto/fetch-registrations.dto';
+import { ShelterView } from '../../views/shelter.view';
 
 @Injectable()
 export class ShelterExplorer {
@@ -39,7 +39,7 @@ export class ShelterExplorer {
     private readonly registrationRepository: RegistrationRepository,
   ) {}
 
-  async fetchCats(dto: FetchCatsDto): Promise<PaginatedModels<CatView>> {
+  async fetchCats(dto: FetchCatsDto): Promise<PaginatedList<CatView>> {
     return this.catRepository.findPaginated(
       dto.page,
       dto.limit,
@@ -50,7 +50,7 @@ export class ShelterExplorer {
 
   async fetchShelters(
     dto: FetchSheltersDto,
-  ): Promise<PaginatedModels<ShelterEntity>> {
+  ): Promise<PaginatedList<ShelterView>> {
     return this.shelterRepository.findPaginated(dto.page, dto.limit, dto.name);
   }
 

@@ -1,7 +1,7 @@
 import { DataSource, FindManyOptions } from 'typeorm';
 import { Inject } from '@nestjs/common';
 import { DataSourceImpl } from '../database/database.types';
-import { PaginatedModels } from '../infra/infra.types';
+import { PaginatedList } from '../infra/infra.types';
 import { RegistrationView } from '../views/registration.view';
 import { FetchRegistrationsDto } from '../dto/fetch-registrations.dto';
 import { CatEntity } from '../database/entities/cat.entity';
@@ -14,7 +14,7 @@ export class RegistrationRepository {
 
   async findPaginated(
     dto: FetchRegistrationsDto,
-  ): Promise<PaginatedModels<RegistrationView>> {
+  ): Promise<PaginatedList<RegistrationView>> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
 
@@ -53,6 +53,6 @@ export class RegistrationRepository {
       }),
     );
 
-    return { result: registrations, total };
+    return new PaginatedList<RegistrationView>(total, registrations);
   }
 }

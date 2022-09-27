@@ -4,7 +4,7 @@ import { CatEntity } from '../database/entities/cat.entity';
 import { DeepPartial, EntityManager, Repository } from 'typeorm';
 
 import { PaginatedSearchRequest } from '../infra/paginated-models-request';
-import { PaginatedModels } from '../infra/infra.types';
+import { PaginatedList } from '../infra/infra.types';
 import { CatView } from '../views/cat.view';
 import { ClientEntity } from '../database/entities/client.entity';
 import { AdoptionView } from '../views/adoption.view';
@@ -57,7 +57,7 @@ export class CatRepository extends DbRepository<CatEntity> {
     limit: number,
     name?: string,
     shelterId?: string,
-  ): Promise<PaginatedModels<CatView>> {
+  ): Promise<PaginatedList<CatView>> {
     const searchPattern = name ? `%${name}%` : `%%`;
 
     let qb = this.generatePaginatedQb(
@@ -74,6 +74,6 @@ export class CatRepository extends DbRepository<CatEntity> {
     const [entities, total] = await qb.getManyAndCount();
     const result = entities.map((e) => new CatView(e));
 
-    return { total, result };
+    return new PaginatedList<CatView>(total, result);
   }
 }

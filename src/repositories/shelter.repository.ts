@@ -1,8 +1,9 @@
 import { DbRepository } from '../infra/db-repository';
 import { Repository } from 'typeorm';
 import { ShelterEntity } from '../database/entities/shelter.entity';
-import { PaginatedModels } from '../infra/infra.types';
+import { PaginatedList } from '../infra/infra.types';
 import { PaginatedSearchRequest } from '../infra/paginated-models-request';
+import { ShelterView } from '../views/shelter.view';
 
 export class ShelterRepository extends DbRepository<ShelterEntity> {
   constructor(protected readonly dbRepo: Repository<ShelterEntity>) {
@@ -13,7 +14,7 @@ export class ShelterRepository extends DbRepository<ShelterEntity> {
     page: number,
     limit: number,
     name?: string,
-  ): Promise<PaginatedModels<ShelterEntity>> {
+  ): Promise<PaginatedList<ShelterView>> {
     const searchPattern = name ? `%${name}%` : `%%`;
 
     const qb = this.generatePaginatedQb(
@@ -22,6 +23,8 @@ export class ShelterRepository extends DbRepository<ShelterEntity> {
     ).where(`shelter."name" LIKE :searchPattern`, { searchPattern });
 
     const [result, total] = await qb.getManyAndCount();
-    return { total, result };
+    const shelters = result.map((shelter) => new ShelterView(shelter));
+
+    return new PaginatedList<ShelterView>(total, shelters);
   }
 }

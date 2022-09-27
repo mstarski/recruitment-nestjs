@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 import { Inject } from '@nestjs/common';
 import { DataSourceImpl } from '../database/database.types';
-import { PaginatedModels } from '../infra/infra.types';
+import { PaginatedList } from '../infra/infra.types';
 import { AdoptionView } from '../views/adoption.view';
 import { CatEntity } from '../database/entities/cat.entity';
 import { FetchAdoptionsDto } from '../dto/fetch-adoptions.dto';
@@ -19,7 +19,7 @@ export class AdoptionRepository {
 
   async findPaginated(
     dto: FetchAdoptionsDto,
-  ): Promise<PaginatedModels<AdoptionView>> {
+  ): Promise<PaginatedList<AdoptionView>> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
 
@@ -75,6 +75,6 @@ export class AdoptionRepository {
     );
 
     await queryRunner.release();
-    return { total, result: adoptions };
+    return new PaginatedList<AdoptionView>(total, adoptions);
   }
 }

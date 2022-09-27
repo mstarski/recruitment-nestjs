@@ -1,7 +1,7 @@
+import { AdoptionView } from '../../views/adoption.view';
 import { Test } from '@nestjs/testing';
-import { ShelterManager } from './shelter-manager';
-import { CatFixtureFactory } from '../../fixtures/cat.fixture';
-import { RegistrationView } from '../../views/registration.view';
+import { DatabaseModule } from '../../database/database.module';
+import { DatabaseMode, DataSourceImpl } from '../../database/database.types';
 import {
   CatRepositoryImpl,
   ClientRepositoryImpl,
@@ -11,23 +11,22 @@ import { createMock } from '@golevelup/ts-jest';
 import { CatRepository } from '../../repositories/cat.repository';
 import { ShelterRepository } from '../../repositories/shelter.repository';
 import { ClientRepository } from '../../repositories/client.repository';
-import { DatabaseMode, DataSourceImpl } from '../../database/database.types';
-import { DatabaseModule } from '../../database/database.module';
 import { ConfigService } from '@nestjs/config';
+import { AdoptionManager } from './adoption-manager';
 import { SeederTool, SeedingResult } from '../../tools/seeder.tool';
 import { DataSource } from 'typeorm';
+import { AdoptCatDto } from '../../dto/adopt-cat.dto';
 
-describe('Shelter Manager', () => {
-  let shelterManager: ShelterManager;
+describe('Adoption Manager', () => {
+  let adoptionManager: AdoptionManager;
   let dataSource: DataSource;
-  let seedingResult: SeedingResult;
 
-  const catFixtureFactory = new CatFixtureFactory();
+  let seedingResult: SeedingResult;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       imports: [DatabaseModule.forRootAsync({ mode: DatabaseMode.UnitTest })],
-      providers: [ShelterManager],
+      providers: [AdoptionManager],
     })
       .useMocker((token) => {
         if (token === CatRepositoryImpl) {
@@ -42,18 +41,20 @@ describe('Shelter Manager', () => {
       })
       .compile();
 
-    shelterManager = module.get<ShelterManager>(ShelterManager);
+    adoptionManager = module.get<AdoptionManager>(AdoptionManager);
     dataSource = module.get<DataSource>(DataSourceImpl);
 
     seedingResult = await SeederTool.seed(dataSource);
   });
 
-  it('Can register a new Cat', async () => {
-    const catCandidate = catFixtureFactory.generate();
-    const shelter = seedingResult.shelters[0];
+  it('Can give a cat to adoption', async () => {
+    const cat = seedingResult.cats[0];
+    const client = seedingResult.clients[0];
+    const dto = new AdoptCatDto();
+    dto.clientId = client.id;
 
-    const response = await shelterManager.registerCat(catCandidate, shelter.id);
+    const response = await adoptionManager.adoptCat(cat.id, dto);
 
-    expect(response).toBeInstanceOf(RegistrationView);
+    expect(response).toBeInstanceOf(AdoptionView);
   });
 });

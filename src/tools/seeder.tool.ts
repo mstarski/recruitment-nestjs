@@ -7,7 +7,7 @@ import { CatFixtureFactory } from '../fixtures/cat.fixture';
 import { ClientFixtureFactory } from '../fixtures/client.fixture';
 import { ClientEntity } from '../database/entities/client.entity';
 
-export interface SeedResult {
+export interface SeedingResult {
   shelters: ShelterEntity[];
   cats: CatEntity[];
   clients: ClientEntity[];
@@ -17,7 +17,7 @@ export class SeederTool extends Tool {
   static async seed(
     dataSource: DataSource,
     onEmpty = true,
-  ): Promise<SeedResult> {
+  ): Promise<SeedingResult> {
     const shelterRepo = dataSource.getRepository(ShelterEntity);
     const catRepo = dataSource.getRepository(CatEntity);
     const clientRepo = dataSource.getRepository(ClientEntity);

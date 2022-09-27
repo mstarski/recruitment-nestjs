@@ -17,6 +17,4 @@
 ## TODO:
 - Write unit tests for core
 - Hackerrank config (hackerrank.yml)
-- Update `@ApiProperty` marked fields and set non-default ones to `{ default: false }`
-- Swagger call example data
 - Remove `TestingTool`

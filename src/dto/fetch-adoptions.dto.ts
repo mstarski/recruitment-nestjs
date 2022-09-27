@@ -4,25 +4,25 @@ import { PaginationDto } from './pagination.dto';
 import { Type } from 'class-transformer';
 
 export class FetchAdoptionsDto extends PaginationDto {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
   catId?: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
   clientId?: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   @Type(() => Date)
   @IsDate()
   dateFrom?: Date;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   @Type(() => Date)
   @IsDate()

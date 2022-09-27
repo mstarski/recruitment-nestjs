@@ -4,7 +4,7 @@ import { IsNumber, IsOptional } from 'class-validator';
 import { PaginationDto } from './pagination.dto';
 
 export class FetchRegistrationsDto extends PaginationDto {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
