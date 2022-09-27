@@ -17,6 +17,7 @@ export class SeederTool extends Tool {
   static async seed(
     dataSource: DataSource,
     onEmpty = true,
+    log = true,
   ): Promise<SeedingResult> {
     const shelterRepo = dataSource.getRepository(ShelterEntity);
     const catRepo = dataSource.getRepository(CatEntity);
@@ -36,7 +37,7 @@ export class SeederTool extends Tool {
     const catFixtureFactory = new CatFixtureFactory();
     const clientFixtureFactory = new ClientFixtureFactory();
 
-    console.log('Seeding db 🌱...');
+    if (log) console.log('Seeding db 🌱...');
 
     const shelter = await shelterRepo.save(
       shelterFixtureFactory.generate('Sample'),
@@ -57,7 +58,7 @@ export class SeederTool extends Tool {
       seededClients.push(savedClient);
     }
 
-    console.log('Seeding has been completed ✅');
+    if (log) console.log('Seeding has been completed ✅');
 
     return {
       shelters: seededShelters,

@@ -56,7 +56,7 @@ export class CatRepository extends DbRepository<CatEntity> {
     page: number,
     limit: number,
     name?: string,
-    shelterId?: string,
+    shelterId?: number,
   ): Promise<PaginatedList<CatView>> {
     const searchPattern = name ? `%${name}%` : `%%`;
 

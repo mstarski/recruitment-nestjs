@@ -12,6 +12,11 @@ import { AdoptionView } from '../../views/adoption.view';
 import { RegistrationView } from '../../views/registration.view';
 import { ConfigService } from '@nestjs/config';
 import { createMock } from '@golevelup/ts-jest';
+import { FetchCatsDto } from '../../dto/fetch-cats.dto';
+import { FetchSheltersDto } from '../../dto/fetch-shelters.dto';
+import { FetchClientsDto } from '../../dto/fetch-clients.dto';
+import { FetchAdoptionsDto } from '../../dto/fetch-adoptions.dto';
+import { FetchRegistrationsDto } from '../../dto/fetch-registrations.dto';
 
 describe('Shelter Explorer', () => {
   let shelterExplorer: ShelterExplorer;
@@ -34,31 +39,47 @@ describe('Shelter Explorer', () => {
     shelterExplorer = module.get<ShelterExplorer>(ShelterExplorer);
     dataSource = module.get<DataSource>(DataSourceImpl);
 
-    seedingResult = await SeederTool.seed(dataSource);
+    seedingResult = await SeederTool.seed(dataSource, true, false);
   });
 
   it(`Can get cats in paginated manner`, async () => {
-    const response = null;
+    const dto = new FetchCatsDto();
+    dto.shelterId = seedingResult.shelters[0].id;
+
+    const response = await shelterExplorer.fetchCats(dto);
+
     expect(response).toBeInstanceOf(PaginatedList<CatView>);
   });
 
   it(`Can get shelters in paginated manner`, async () => {
-    const response = null;
+    const dto = new FetchSheltersDto();
+
+    const response = await shelterExplorer.fetchShelters(dto);
+
     expect(response).toBeInstanceOf(PaginatedList<ShelterEntity>);
   });
 
   it(`Can get clients in paginated manner`, async () => {
-    const response = null;
+    const dto = new FetchClientsDto();
+
+    const response = await shelterExplorer.fetchClients(dto);
+
     expect(response).toBeInstanceOf(PaginatedList<ClientView>);
   });
 
   it(`Can get adoptions in paginated manner`, async () => {
-    const response = null;
+    const dto = new FetchAdoptionsDto();
+
+    const response = await shelterExplorer.fetchAdoptions(dto);
+
     expect(response).toBeInstanceOf(PaginatedList<AdoptionView>);
   });
 
   it(`Can get registrations cats in paginated manner`, async () => {
-    const response = null;
+    const dto = new FetchRegistrationsDto();
+
+    const response = await shelterExplorer.fetchRegistrations(dto);
+
     expect(response).toBeInstanceOf(PaginatedList<RegistrationView>);
   });
 });

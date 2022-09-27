@@ -18,3 +18,4 @@
 - Write unit tests for core
 - Hackerrank config (hackerrank.yml)
 - Remove `TestingTool`
+- Write empty test cases for interview questions

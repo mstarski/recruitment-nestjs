@@ -44,7 +44,7 @@ describe('Adoption Manager', () => {
     adoptionManager = module.get<AdoptionManager>(AdoptionManager);
     dataSource = module.get<DataSource>(DataSourceImpl);
 
-    seedingResult = await SeederTool.seed(dataSource);
+    seedingResult = await SeederTool.seed(dataSource, true, false);
   });
 
   it('Can give a cat to adoption', async () => {

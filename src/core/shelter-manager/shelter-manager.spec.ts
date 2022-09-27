@@ -45,7 +45,7 @@ describe('Shelter Manager', () => {
     shelterManager = module.get<ShelterManager>(ShelterManager);
     dataSource = module.get<DataSource>(DataSourceImpl);
 
-    seedingResult = await SeederTool.seed(dataSource);
+    seedingResult = await SeederTool.seed(dataSource, true, false);
   });
 
   it('Can register a new Cat', async () => {

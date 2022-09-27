@@ -7,7 +7,7 @@ export class FetchCatsDto extends PaginationDto {
   @Type(() => Number)
   @IsInt()
   @ApiProperty()
-  shelterId: string;
+  shelterId: number;
 
   @IsString()
   @IsOptional()
