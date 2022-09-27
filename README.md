@@ -5,6 +5,10 @@
 2. `npm ci`
 3. `npm run start:dev`
 
+## OpenAPI documentation
+You can access generated swagger page at `http://localhost:{http.port}/docs`
+(By default `http.port` is specified in `config.example.yml` as `8000`).
+
 ## Interview questions (notes)
 1. Add a constraint so that adopting client cannot be under 18 years old
 2. There can't be a cat without a shelter
@@ -15,7 +19,6 @@
 
 
 ## TODO:
-- Write unit tests for core
 - Hackerrank config (hackerrank.yml)
 - Remove `TestingTool`
 - Write empty test cases for interview questions
