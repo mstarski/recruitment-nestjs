@@ -3,3 +3,4 @@ sqlite
 dist
 node_modules
 config/config.yml
+coverage

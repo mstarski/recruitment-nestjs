@@ -1,0 +1,20 @@
+version: 1.0
+configuration:
+  has_webserver: true
+
+  scoring:
+    command: npm ci && npm test
+    files:
+      - unit.xml
+
+  readonly_paths:
+    - src/**/*.spec.ts
+    - test/**/*.*
+
+  ide_config:
+    default_open_files:
+      - src/main.ts
+    project_menu:
+      run: npm start:dev
+      install: npm ci
+      test: npm test
