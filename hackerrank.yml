@@ -2,6 +2,11 @@ version: 1.0
 configuration:
   has_webserver: true
 
+  scoring:
+    command: "npm test"
+    files:
+      - junit.xml
+
   readonly_paths:
     - src/**/*.spec.ts
     - test/**/*.*
