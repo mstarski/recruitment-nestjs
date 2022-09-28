@@ -53,6 +53,7 @@ describe('Adoption Manager', () => {
     const underageClient = await dataSource
       .getRepository(ClientEntity)
       .save(clientFixtureFactory.generate(16));
+
     const cat = seedingResult.cats[0];
     const dto = new AdoptCatDto();
     dto.clientId = underageClient.id;

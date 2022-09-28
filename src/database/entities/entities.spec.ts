@@ -3,7 +3,7 @@ import { DatabaseModule } from '../database.module';
 import { DatabaseMode, DataSourceImpl } from '../database.types';
 import { ConfigService } from '@nestjs/config';
 import { createMock } from '@golevelup/ts-jest';
-import { DataSource } from 'typeorm';
+import { DataSource, QueryFailedError } from 'typeorm';
 import { SeederTool, SeedingResult } from '../../tools/seeder.tool';
 import { CatFixtureFactory } from '../../fixtures/cat.fixture';
 import { CatEntity } from './cat.entity';
@@ -39,10 +39,12 @@ describe('DB Entities properties', () => {
     });
 
     // TODO: Failing test case #3
-    it(`if age is not known it should be set to NULL`, () => {
+    it(`if age is not known it should be set to NULL`, async () => {
       const newCat = catFixtureFactory.generate();
 
-      expect(newCat['age']).toBe(null);
+      const entity = await dataSource.getRepository(CatEntity).save(newCat);
+
+      expect(entity['age']).toBe(null);
     });
 
     // TODO: Failing test case #4
@@ -57,7 +59,13 @@ describe('DB Entities properties', () => {
 
       const response = catRepo.save(newCat);
 
-      await expect(response).rejects.toThrowError();
+      await expect(response).rejects.toThrow(
+        new QueryFailedError(
+          undefined,
+          undefined,
+          'SQLITE_CONSTRAINT: UNIQUE constraint failed: cat_entity.name, cat_entity.breed',
+        ),
+      );
     });
   });
 });
