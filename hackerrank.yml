@@ -3,7 +3,7 @@ configuration:
   has_webserver: true
 
   scoring:
-    command: "npm test"
+    command: "npm ci && npm test"
     files:
       - junit.xml
 
