@@ -4,7 +4,7 @@ import { Sex } from '../value-objects/sex';
 import { CatEntity } from '../database/entities/cat.entity';
 
 export class CatFixtureFactory implements FixtureFactory<CatEntity> {
-  generate(): CatEntity {
+  generate(age?: number): CatEntity {
     const sex = Sex.getRandom();
 
     return new CatEntity({

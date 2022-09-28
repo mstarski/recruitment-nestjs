@@ -11,14 +11,9 @@ You can access generated swagger page at `http://localhost:{http.port}/docs`
 
 ## Interview questions (notes)
 1. Add a constraint so that adopting client cannot be under 18 years old
-2. There can't be a cat without a shelter
-3. Add 'age' property to `CatEntity`
-4. There can't be two cats that have the same name/breed pair assigned
-5. Create an endpoint to search registrations
-6. Add info about current page to the paginated dto
-
+2. Add 'age' property to `CatEntity`
+3. There can't be two cats that have the same name/breed pair assigned
+5. Add info about current page to the paginated dto
 
 ## TODO:
 - Hackerrank config (hackerrank.yml)
-- Remove `TestingTool`
-- Write empty test cases for interview questions
