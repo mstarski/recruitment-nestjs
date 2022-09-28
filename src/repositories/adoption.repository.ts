@@ -10,7 +10,7 @@ import { PaginatedList } from '../infra/infra.types';
 import { AdoptionView } from '../views/adoption.view';
 import { CatEntity } from '../database/entities/cat.entity';
 import { FetchAdoptionsDto } from '../dto/fetch-adoptions.dto';
-import { PaginatedSearchRequest } from '../infra/paginated-models-request';
+import { PaginatedSearchRequest } from '../infra/paginated-search-request';
 
 export class AdoptionRepository {
   constructor(
@@ -75,6 +75,6 @@ export class AdoptionRepository {
     );
 
     await queryRunner.release();
-    return new PaginatedList<AdoptionView>(total, adoptions);
+    return new PaginatedList<AdoptionView>(total, adoptions, dto.page);
   }
 }

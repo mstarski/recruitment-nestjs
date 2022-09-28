@@ -7,8 +7,12 @@ export class PaginatedList<Model> {
   @ApiProperty({ isArray: true })
   result: Model[];
 
-  constructor(total: number, result: Model[]) {
+  @ApiProperty({ example: 1 })
+  page: number;
+
+  constructor(total: number, result: Model[], page: number) {
     this.total = total;
     this.result = result;
+    this.page = page;
   }
 }

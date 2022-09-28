@@ -5,7 +5,7 @@ import { PaginatedList } from '../infra/infra.types';
 import { RegistrationView } from '../views/registration.view';
 import { FetchRegistrationsDto } from '../dto/fetch-registrations.dto';
 import { CatEntity } from '../database/entities/cat.entity';
-import { PaginatedSearchRequest } from '../infra/paginated-models-request';
+import { PaginatedSearchRequest } from '../infra/paginated-search-request';
 
 export class RegistrationRepository {
   constructor(
@@ -53,6 +53,6 @@ export class RegistrationRepository {
       }),
     );
 
-    return new PaginatedList<RegistrationView>(total, registrations);
+    return new PaginatedList<RegistrationView>(total, registrations, dto.page);
   }
 }

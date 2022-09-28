@@ -2,7 +2,7 @@ import { DbRepository } from '../infra/db-repository';
 import { Repository } from 'typeorm';
 import { ClientEntity } from '../database/entities/client.entity';
 import { PaginatedList } from '../infra/infra.types';
-import { PaginatedSearchRequest } from '../infra/paginated-models-request';
+import { PaginatedSearchRequest } from '../infra/paginated-search-request';
 import { ClientView } from '../views/client.view';
 
 export class ClientRepository extends DbRepository<ClientEntity> {
@@ -31,6 +31,6 @@ export class ClientRepository extends DbRepository<ClientEntity> {
     const [entities, total] = await qb.getManyAndCount();
     const result = entities.map((e) => new ClientView(e));
 
-    return new PaginatedList<ClientView>(total, result);
+    return new PaginatedList<ClientView>(total, result, page);
   }
 }

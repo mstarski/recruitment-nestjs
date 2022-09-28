@@ -6,7 +6,7 @@ import {
   SelectQueryBuilder,
 } from 'typeorm';
 import { CatEntity } from '../database/entities/cat.entity';
-import { PaginatedSearchRequest } from './paginated-models-request';
+import { PaginatedSearchRequest } from './paginated-search-request';
 
 export abstract class DbRepository<Entity> {
   protected constructor(protected readonly dbRepo: Repository<Entity>) {}

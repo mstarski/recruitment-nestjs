@@ -1,9 +1,10 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, Unique } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { ShelterEntity } from './shelter.entity';
 import { ClientEntity } from './client.entity';
 
 @Entity()
+@Unique(['name', 'breed'])
 export class CatEntity extends BaseEntity {
   @Column()
   name: string;
@@ -25,6 +26,9 @@ export class CatEntity extends BaseEntity {
 
   @Column({ type: 'datetime', nullable: true })
   adoptionDate: Date;
+
+  @Column({ type: 'int8', nullable: true })
+  age: number;
 
   constructor(props: Partial<CatEntity>) {
     super(props);

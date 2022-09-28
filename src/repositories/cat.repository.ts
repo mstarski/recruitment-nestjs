@@ -3,7 +3,7 @@ import { CatEntity } from '../database/entities/cat.entity';
 
 import { DeepPartial, EntityManager, Repository } from 'typeorm';
 
-import { PaginatedSearchRequest } from '../infra/paginated-models-request';
+import { PaginatedSearchRequest } from '../infra/paginated-search-request';
 import { PaginatedList } from '../infra/infra.types';
 import { CatView } from '../views/cat.view';
 import { ClientEntity } from '../database/entities/client.entity';
@@ -43,6 +43,12 @@ export class CatRepository extends DbRepository<CatEntity> {
   ): Promise<AdoptionView> {
     const manager = this.resolveManager(entityManager);
 
+    if (client.age < 18) {
+      throw new Error(
+        `${client.name} cannot adopt a cat because they're under 18.`,
+      );
+    }
+
     cat.adoptedBy = Promise.resolve(client);
     cat.adoptionDate = new Date();
     cat.isAdopted = 1;
@@ -74,6 +80,6 @@ export class CatRepository extends DbRepository<CatEntity> {
     const [entities, total] = await qb.getManyAndCount();
     const result = entities.map((e) => new CatView(e));
 
-    return new PaginatedList<CatView>(total, result);
+    return new PaginatedList<CatView>(total, result, page);
   }
 }
