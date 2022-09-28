@@ -2,11 +2,6 @@ version: 1.0
 configuration:
   has_webserver: true
 
-  scoring:
-    command: npm ci && npm test
-    files:
-      - unit.xml
-
   readonly_paths:
     - src/**/*.spec.ts
     - test/**/*.*
